@@ -1,12 +1,31 @@
 # gorename
 A bulk renaming utility written in golang for the command line
 
+## -h output
+```
+usage: gorename [-h|--help] -e|--command (rename|prep) [-c|--contentDir
+                "<value>"]
+
+                Bulk renaming utility written in golang
+
+Arguments:
+
+  -h  --help        Print help information
+  -e  --command     The command you want to run. `rename` uses a buffer file to
+                    rename files. `prep` creates a buffer file
+  -c  --contentDir  Directory of files to be renamed
+
+```
 ## Example
 Create a buffer file to edit
 ```
 gorename -e prep -c path/to/dir/containing/to-be-renamed-files
 ```
-This creates a `buffer.txt` file in your current working directory. 
+OR if you're on a unix based machine, a simpler command would be...
+```
+ls path/to/dir/containing/ >> buffer.txt
+```
+This creates a `buffer.txt` file with the names of all the files in the given directory in your current working directory. 
 
 #### NOTE: run this utility OUTSIDE of the directory with all the files you want to rename
 
@@ -14,9 +33,8 @@ This creates a `buffer.txt` file in your current working directory.
 
 Use buffer file to rename 
 ```
-gorename -e rename -b buffer.txt -c path/to/dir/containing/to-be-renamed-files
+gorename -e rename -c path/to/dir/containing/to-be-renamed-files
 ```
+and gorename will remove the buffer file for you
 
-delete the buffer.txt file and you're done
-
-I AM NOT RESPONSIBLE FOR ANY LOSS OF DATA USE AT YOUR OWN CAUTION, USING A BLANK `buffer.txt` FILE MAY BREAK YOUR FILES
+I AM NOT RESPONSIBLE FOR ANY LOSS OF DATA USE AT YOUR OWN CAUTION, READ MIT LICENSE

@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -46,10 +47,15 @@ func readLines(path string) ([]string, error) {
 	for scanner.Scan() {
 		lines = append(lines, scanner.Text())
 	}
+	// check for empty file
+	if len(lines) == 0 {
+		return nil, errors.New("File was empty")
+	}
 	return lines, scanner.Err()
 }
 
-func rename(bufferFile, contentDir string) {
+func rename(contentDir string) {
+	bufferFile := "buffer.txt"
 	// read all lines of buffer file into slice
 	fileLines, err := readLines(bufferFile)
 	if err != nil {
@@ -66,23 +72,24 @@ func rename(bufferFile, contentDir string) {
 	for i := 0; i < len(fileLines); i++ {
 		os.Rename(fmt.Sprintf("%s/%s", contentDir, contentFiles[i]), fmt.Sprintf("%s/%s", contentDir, fileLines[i]))
 	}
+	// remove buffer after renaming
+	removeErr := os.Remove("buffer.txt")
+	if removeErr != nil {
+		log.Fatal(err)
+	}
 
 }
 
 func main() {
 	parser := argparse.NewParser("gorename", "Bulk renaming utility written in golang")
-	// TODO: add the rest of the arguments
 	command := parser.Selector("e", "command", []string{"rename", "prep"}, &argparse.Options{
 		Required: true,
-		Help:     "The command you want to run. `rename` takes a buffer file and uses it to rename files. `prep` creates a buffer file",
+		Help:     "The command you want to run. `rename` uses a buffer file to rename files. `prep` creates a buffer file",
 	})
-	bufferLoc := parser.String("b", "bufferLocation", &argparse.Options{
-		Required: false,
-		Help:     "Path to where the temporary buffer file was written",
-	})
+
 	contentDir := parser.String("c", "contentDir", &argparse.Options{
 		Required: false,
-		Help:     "Directory to files to be renamed",
+		Help:     "Directory of files to be renamed",
 	})
 
 	err := parser.Parse(os.Args)
@@ -92,7 +99,7 @@ func main() {
 		fmt.Print(parser.Usage(err))
 	} else {
 		if *command == "rename" {
-			rename(*bufferLoc, *contentDir)
+			rename(*contentDir)
 		} else {
 			readdirintobuffer(*contentDir)
 		}

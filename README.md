@@ -1,6 +1,11 @@
 # gorename
 A bulk renaming utility written in golang for the command line
 
+## Demonstration
+<div style="width:100%;height:0px;position:relative;padding-bottom:56.388%;"><iframe src="https://streamable.com/s/15m6e/kwujnt" frameborder="0" width="100%" height="100%" allowfullscreen style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden;"></iframe></div>
+
+[Here's the streamable link](https://streamable.com/15m6e)
+
 ## -h output
 ```
 usage: gorename [-h|--help] -e|--command (rename|prep) [-c|--contentDir
@@ -29,7 +34,7 @@ This creates a `buffer.txt` file with the names of all the files in the given di
 
 #### NOTE: run this utility OUTSIDE of the directory with all the files you want to rename
 
-#### Then edit the filenames in the buffer file to what you want your directory to look like (order will be preservered)
+#### Then edit the filenames in the buffer file to what you want your directory to look like (order will be preserved)
 
 Use buffer file to rename 
 ```

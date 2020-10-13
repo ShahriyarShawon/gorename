@@ -1,10 +1,6 @@
 # gorename
 A bulk renaming utility written in golang for the command line
 
-## Demonstration
-
-[Here's the streamable link](https://streamable.com/15m6e)
-
 ## -h output
 ```
 usage: gorename [-h|--help] -e|--command (rename|prep) [-c|--contentDir
